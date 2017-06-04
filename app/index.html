@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Contact App</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="styles/app.css">
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="scripts/app.module.js"></script>
+    <script src="scripts/app.routes.js"></script>
+    <script src="scripts/authentication/authentication.controller.js"></script>
+    <script src="scripts/authentication/authentication.service.js"></script>
+    <script src="scripts/home/home.controller.js"></script>
+  </head>
+  <body ng-app="contactApp">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-9 col-xs-offset-3">
+                <header ng-include="'views/shared/header.html'"></header>    
+            </div>
+        </div>
+        <ng-view></ng-view>
+    </div>
+   </body>
+</html>

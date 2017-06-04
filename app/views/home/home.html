@@ -1,0 +1,103 @@
+<div ng-controller="HomeController as homeController">
+    <div class="row">
+        <div class="col-xs-2 col-xs-offset-8">
+            <button class="btn btn-danger" ng-click="homeController.onLogOut()">LogOut</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 form-group">
+            <form name="form" ng-submit="homeController.onAddContact(form)" role="form" novalidate>
+                <div class="row">
+                    <div class="col-xs-12 col-lg-3 col-md-3">
+                        <label for="username">Name:</label>
+                        <input 
+                           type="text" 
+                           name="name" 
+                           id="name" 
+                           class="form-control"
+                           ng-model="homeController.person.name" 
+                           required
+                           ng-disabled="homeController.readMode"
+                        >
+                        <div class="alert alert-danger" role="alert" ng-show="form.name.$dirty && form.name.$error.required" >Name is required</div> 
+                    </div>
+                    <div class=" col-xs-12 col-md-3 col-lg-3">
+                        <label for="phoneNumber">Phone Number:</label>
+                        <input 
+                          type="text" 
+                          name="phoneNumber" 
+                          id="phoneNumber" 
+                          class="form-control"
+                          ng-pattern="/^[0-9]+([\.|,][0-9]+)?$/"
+                          ng-model="homeController.person.phoneNumber" 
+                          required
+                          ng-disabled="homeController.readMode"       
+                        >
+                        <div class="alert alert-danger" role="alert" ng-show="form.phoneNumber.$dirty && form.phoneNumber.$error.required" class="help-block">PhoneNumber is required</div>
+                        <div class="alert alert-danger" role="alert" ng-show="form.phoneNumber.$error.pattern">Invalid PhoneNumber</div>
+                    </div>
+                    <div class="col-xs-12 col-md-3 col-lg-3">
+                        <label for="email">Email:</label>
+                        <input 
+                            type="email" 
+                            name="email" 
+                            id="email"
+                            class="form-control"
+                            ng-model="homeController.person.email" 
+                            required
+                            ng-disabled="homeController.readMode"
+                        >
+                        <div class="alert alert-danger" role="alert" ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Email is required</div>
+                        <div class="alert alert-danger" role="alert" ng-show="!form.email.$valid && form.email.$dirty && form.email.$viewValue.length>0" class="help-block">Invalid Email</div>
+                    </div>
+                    
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-xs-12 col-md-3 col-lg-3">
+                        <input 
+                           type="submit" 
+                           value="Add" 
+                           class="btn btn-primary"
+                           ng-if="!homeController.readMode && !homeController.updateMode" 
+                           ng-disabled="form.name.$error.required || form.phoneNumber.$error.required || form.email.$error.required || !form.email.$valid || form.phoneNumber.$error.pattern ">
+                        <input 
+                           type="button" 
+                           value="Update" 
+                           class="btn btn-primary"
+                           ng-click="homeController.onUpdateContact(form)" 
+                           ng-if="!homeController.readMode && homeController.updateMode" 
+                           ng-disabled="form.name.$error.required || form.phoneNumber.$error.required || form.email.$error.required || !form.email.$valid ">
+                        <input 
+                           type="button" 
+                           value="Edit" 
+                           class="btn btn-primary"
+                           ng-click="homeController.readMode = false; homeController.updateMode = true " 
+                           ng-if="homeController.readMode && !homeController.updateMode" 
+                        >
+                        <input 
+                           type="button" 
+                           value="Back" 
+                           class="btn btn-dafault"
+                           ng-click="homeController.onBack(form)" 
+                           ng-if="homeController.readMode && !homeController.updateMode" 
+                        >
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+            <div ng-if="!homeController.readMode && !homeController.updateMode" class="list-group">
+                <div ng-repeat="contact in homeController.contacts track by $index" >
+                   <span data-toggle="tooltip" data-placement="top" title="Click to View" ng-click="homeController.onEdit($index)" class="list-group-item list-group-item-success"><strong>{{contact.name}}</strong></span>
+                   <br>
+                </div>
+                <p ng-if="homeController.contacts.length === 0" class="list-group-item active">No Contacts Available ! Add Now..</p>
+            </div>
+        </div>
+    </div>
+    
+</div>
